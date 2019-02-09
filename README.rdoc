@@ -1,28 +1,48 @@
-== README
+== Official API documentation for iOS_Rails_Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Staging endpoints will be located at ios-rails-backend.herokuapp.com. Production endpoints are located at api.ios-rails-backend.herokuapp.com. API version is scoped via the URL. 
 
-Things you may want to cover:
+*** Note: Those URLS are subject to change ***
 
-* Ruby version
+For example:
 
-* System dependencies
+https://api.ios-rails-backend.herokuapp.com/v1/events/:id
 
-* Configuration
+All POST and PATCH endpoints accept JSON data in the body of the request. All requests require a 'Content-Type': 'application/json' header. All responses are JSON.
 
-* Database creation
+POST /events
 
-* Database initialization
+Example request data:
 
-* How to run the test suite
+{ 'address' : '85 2nd Street', 'ended_at' : '2013-09-17T00:00:00.000Z', 'lat' : 37.8050217, 'lon' : -122.409155, 'name' : 'Best event OF ALL TIME!', 'started_at' : '2013-09-16T00:00:00.000Z', 'owner' : { 'device_token' : '123abc456xyz' } } Required: lat, lon, name, started_at owner[device_token] Optional: address, ended_at Example response:
 
-* Services (job queues, cache servers, search engines, etc.)
+{ 'id' : '123', } Example 422 response:
 
-* Deployment instructions
+{ 'message' : 'Validation Failed', 'errors' : [ "Lat can't be blank", "Name can't be blank" ] } GET /events/EVENT_ID
 
-* ...
+Example response:
 
+{ 'address' : '85 2nd Street', 'ended_at' : '2013-09-17T00:00:00.000Z', 'lat' : 37.8050217, 'lon' : -122.409155, 'name' : 'Best event OF ALL TIME!', 'started_at' : '2013-09-16T00:00:00.000Z', 'owner' : { 'device_token' : '123abc456xyz' } } PATCH /events/EVENT_ID
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+Example request data:
+
+{ 'address' : '85 2nd Street', 'ended_at' : '2013-09-17T00:00:00.000Z', 'lat' : 37.8050217, 'lon' : -122.409155, 'name' : 'Best event EVERRR!', 'started_at' : '2013-09-16T00:00:00.000Z', 'owner' : { 'device_token' : '123abc456xyz' } } Required: lat, lon, name, started_at owner[device_token] Optional: address, ended_at Example response:
+
+{ 'id' : '123', } Example 422 response:
+
+{ 'message' : 'Validation Failed', 'errors' : [ "Lon can't be blank", ] } POST /users
+
+Example request data:
+
+{ 'device_token' : '123abc456xyz' } Required: device_token Example response:
+
+{ 'device_token' : '123abc456xyz', } GET /events/nearest?lat=LAT&lon=LON&radius=RADIUS
+
+Radius units are kilometers. Example response data:
+
+[ { 'address' : '85 2nd Street', 'ended_at' : '2013-09-17T00:00:00.000Z', 'lat' : 37.8050217, 'lon' : -122.409155, 'name' : 'Best event EVERRR!', 'started_at' : '2013-09-16T00:00:00.000Z', 'owner' : { 'device_token' : '123abc456xyz' }, { 'address' : '88 2nd Street', 'ended_at' : '2013-09-17T00:00:00.000Z', 'lat' : 37.8050217, 'lon' : -122.409155, 'name' : 'some other event', 'started_at' : '2013-09-16T00:00:00.000Z', 'owner' : { 'device_token' : '123abc456xyz' } } ] POST /attendances
+
+Example request data:
+
+{ 'event' : { 'id' : '5' }, 'user' : { 'device_token' : '123abc456xyz' } }
+
