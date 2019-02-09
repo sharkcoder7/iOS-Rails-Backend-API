@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
 
+ HighVoltage.configure do |config|
+  config.home_page = 'home'
+ end
+
  scope module: :api, defaults: { format: 'json' } do
     namespace :v1 do
       namespace :events do
