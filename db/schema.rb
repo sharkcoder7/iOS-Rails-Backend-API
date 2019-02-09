@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140526014226) do
+ActiveRecord::Schema.define(version: 20140528013936) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "attendences", force: true do |t|
+  create_table "attendances", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "event_id",   null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20140526014226) do
     t.string   "name",       null: false
     t.integer  "user_id",    null: false
     t.datetime "started_at", null: false
-    t.string   "address"
+    t.string   "address", null: false
     t.float    "lat",        null: false
     t.float    "lon",        null: false
   end
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(version: 20140526014226) do
   create_table "users", force: true do |t|
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "device_token"
+    t.string   "device_token", null: false
   end
 
 end
